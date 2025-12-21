@@ -1,23 +1,24 @@
 import Tags from "../lib/bootstrap5-tags/tags.js";
 
-$(function() {
-  $('[data-confirm]').on('click', function() {
-    return confirm($(this).data('confirm'));
-  });
+$(function () {
+    $('[data-confirm]').on('click', function () {
+        return confirm($(this).data('confirm'));
+    });
 
-  $('form :input').on('change', function () {
-    $(this).closest('form').attr('data-changed', 'true');
-  });
+    $('form :input').on('change', function () {
+        $(this).closest('form').attr('data-changed', 'true');
+    });
 
-  $('[data-unsaved]').on('click', function () {
-    let changed = $(this).closest('form').attr('data-changed');
-    let message = $(this).data('unsaved');
-    if (changed) {
-      return confirm(message);
-    }
-    return true;
-  });
+    $('[data-unsaved]').on('click', function () {
+        const changed = $(this).closest('form').attr('data-changed');
+        const message = $(this).data('unsaved');
 
-  Tags.init();
+        if (changed) {
+            return confirm(message);
+        }
+
+        return true;
+    });
+
+    Tags.init();
 });
-
