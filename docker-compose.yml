@@ -1,0 +1,16 @@
+services:
+  electronicqueue.identityserver:
+    image: ${DOCKER_REGISTRY-}electronicqueueidentityserver
+    build:
+      context: .
+      dockerfile: src/ElectronicQueue.IdentityServer/Dockerfile
+
+  postgresql:
+    image: postgres:16
+    restart: always
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U postgres"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+        start_period: 10s

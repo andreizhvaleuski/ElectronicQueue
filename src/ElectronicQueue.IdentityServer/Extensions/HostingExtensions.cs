@@ -78,21 +78,19 @@ namespace ElectronicQueue.IdentityServer.Extensions
                     }
                 })
                 .AddTestUsers(TestUsers.Users)
-                // this adds the config data from DB (clients, resources, CORS)
                 .AddConfigurationStore(options =>
                 {
                     options.ConfigureDbContext = b =>
-                        b.UseSqlite(connectionString,
+                        b.UseNpgsql(
+                            connectionString,
                             dbOpts => dbOpts.MigrationsAssembly(typeof(Program).Assembly.FullName));
                 })
-                // this is something you will want in production to reduce load on and requests to the DB
-                //.AddConfigurationStoreCache()
-                //
-                // this adds the operational data from DB (codes, tokens, consents)
+                .AddConfigurationStoreCache()
                 .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = b =>
-                        b.UseSqlite(connectionString,
+                        b.UseNpgsql(
+                            connectionString,
                             dbOpts => dbOpts.MigrationsAssembly(typeof(Program).Assembly.FullName));
                 })
                 .AddServerSideSessions()
